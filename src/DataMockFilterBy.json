@@ -1,0 +1,69 @@
+[
+    {
+    "id": 1,
+    "name": "Company",
+    "value": "Company",
+    "Type": "Hierarchy"
+    },
+    {
+        "id": 2,
+        "name": "Date",
+        "value": "Date",
+        "Type": "Date"
+    },
+    {   
+        "id": 3,
+        "name": "Amount",
+        "value": "Amount",
+        "Type": "Number"
+    },
+    {
+        "id": 4,
+        "name": "invoice No",
+        "value": "invoice No",
+        "Type": "Text"
+    },
+    {
+        "id": 5,
+        "name": "Requestor Name",
+        "value": "Requestor Name",
+        "Type": "Text"
+    },
+    {
+        "id": 6,
+        "name": "Cost Center",
+        "value": "Cost Center",
+        "Type": "Text"
+    },
+    {
+        "id": 7,
+        "name": "Requestor Email",
+        "value": "Requestor Email",
+        "Type": "Text"
+    },
+    {
+        "id": 8,
+        "name": "Requitioner Email",
+        "value": "Requitioner Email",
+        "Type": "Text"
+    },
+    {
+        "id": 9,
+        "name": "Order No",
+        "value": "Order No",
+        "Type": "Text"
+    },
+    {
+        "id": 10,
+        "name": "Blanket Order No",
+        "value": "Blanket Order No",
+        "Type": "Text"
+    },
+    {
+        "id": 11,
+        "name": "Other",
+        "value": "Other",
+        "Type": "List"
+    }
+
+]

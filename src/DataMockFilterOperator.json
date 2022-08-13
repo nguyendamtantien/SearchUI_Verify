@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "Operator": "contains",
+        "DataType": "Hierarchy"
+    },
+    {
+        "id": 2,
+        "Operator": "on or after",
+        "DataType": "Date"
+    },
+    {
+        "id": 3,
+        "Operator": "on or before",
+        "DataType": "Date"
+    },
+    {
+        "id": 4,
+        "Operator": "between",
+        "DataType": "Date"
+    },
+    {
+        "id": 5,
+        "Operator": "is",
+        "DataType": "Number"
+    },
+    {
+        "id": 6,
+        "Operator": "more than",
+        "DataType": "Number"
+    },
+    {
+        "id": 7,
+        "Operator": "less than",
+        "DataType": "Number"
+    },
+    {
+        "id": 8,
+        "Operator": "is",
+        "DataType": "Text"
+    },
+    {
+        "id": 9,
+        "Operator": "contains",
+        "DataType": "Text"
+    },
+    {
+        "id": 10,
+        "Operator": "includes",
+        "DataType": "List"
+    }
+]
