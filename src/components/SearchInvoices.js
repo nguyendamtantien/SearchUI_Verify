@@ -503,6 +503,11 @@ function SearchInvoices() {
             <th>Net</th>
             <th>Tax</th>
             <th>Total</th>
+            <th>Invoice_Type</th>
+            <th>IsCleared</th>
+            <th>IsExported</th>
+            <th>IsQuery</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -519,6 +524,11 @@ function SearchInvoices() {
               <td>{item.Net}</td>
               <td>{item.Tax}</td>
               <td>{item.Total}</td>
+              <td>{item.Invoice_Type}</td>
+              <td>{item.IsCleared ? "Yes" :" No"}</td>
+              <td>{item.IsExported ? "Yes" :" No"}</td>
+              <td>{item.IsQuery ? "Yes" :" No"}</td>
+              <td>{item.Status}</td>
             </tr>
           ))}
         </tbody>
