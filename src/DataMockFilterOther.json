@@ -1,0 +1,11 @@
+[
+  {"name": "valueOther", "label": "Invoices", "value": "Invoices", "data": "Invoices", "type": "Invoice_Type"},
+  {"name": "valueOther", "label": "Credits", "value": "Credits", "data": "Credits", "type": "Invoice_Type" },
+  {"name": "valueOther", "label": "Invoice Cleared", "value": "Invoice_Cleared","data": true, "type": "IsCleared"},
+  {"name": "valueOther", "label": "Not Cleared", "value": "Not_Cleared","data": false, "type": "IsCleared" },
+  {"name": "valueOther", "label": "Exported", "value": "Exported","data": true, "type": "IsExported" },
+  {"name": "valueOther", "label": "Not Exported", "value": "Not_Exported","data": false, "type": "IsExported" },
+  {"name": "valueOther", "label": "Queried", "value": "Queried","data": true, "type": "IsQuery" },
+  {"name": "valueOther", "label": "Not Queried", "value": "Not_Queried","data": false, "type": "IsQuery" },
+  {"name": "valueOther", "label": "Unapproved Only", "value": "Unapproved", "data": "Unapproved", "type": "Status" }
+]

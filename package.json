@@ -12,7 +12,9 @@
     "react-bootstrap": "^2.5.0",
     "react-bootstrap-navbar": "^1.1.0",
     "react-dom": "^18.2.0",
+    "react-multiple-select-dropdown-lite": "^2.0.6",
     "react-scripts": "5.0.1",
+    "react-select": "^5.4.0",
     "sweetpagination": "^1.0.15",
     "web-vitals": "^2.1.4"
   },

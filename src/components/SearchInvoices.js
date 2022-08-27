@@ -6,83 +6,111 @@ import Button from "react-bootstrap/Button";
 // import InputGroup from "react-bootstrap/InputGroup";
 import Collapse from "react-bootstrap/Collapse";
 import Table from "react-bootstrap/Table";
+// import MultiSelect from  'react-multiple-select-dropdown-lite'
+// import  'react-multiple-select-dropdown-lite/dist/index.css'
+import Select from 'react-select';
 import "./SearchInvoices.css";
 import data from "../DataMock.json";
 import dataFilterBy from "../DataMockFilterBy.json";
 import dataFilterOperator from "../DataMockFilterOperator.json";
 import dataCompany from "../DataMockCompany.json";
+import dataFilterOther from "../DataMockFilterOther.json";
 import Pagination from "./Pagination";
 
 function SearchInvoices() {
+  const [selectedValueOther, setSelectedValueOther] = useState("");
+
+  const  options  = dataFilterOther
+
   const [invoices, setInvoices] = useState([]);
-  const [listOperator, setListOperator] = useState([]);
+  // const [listOperator, setListOperator] = useState([{}]);
   const [search, setSearch] = useState("");
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
-  const [formValues, setFormValues] = useState([{ by: "", operator: "", value:"" }]);
-  const [byValues, setByValues] = useState(dataFilterBy[0].value)
-  // const [operatorValues, setOperatorValues] = useState("");
-  const [Values, setValues] = useState("");
-  const [dataType, setDataType] = useState("");
-  const [Operator, setOperator] = useState("");
-  // const [formValuesValue, setValues] = useState("");
+  const [formValues, setFormValues] = useState([
+    { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], dataType: "", Operator: ""},
+  ]);
+  const [byValues, setByValues] = useState("");
   const ITEMS_PER_PAGE = 3;
 
   useEffect(() => {
     setInvoices(data);
   }, []);
 
-  const handleChangeBy = (i, event) => {
+  const uniqueIds = [];
 
+  const uniqueFilters = formValues.filter((element) => {
+    const isDuplicate = uniqueIds.includes(element.by);
+
+    if (!isDuplicate) {
+      uniqueIds.push(element.by);
+
+      return true;
+    }
+
+    return false;
+  });
+
+
+  const handleChangeBy = (i, event) => {
     setByValues(event.target.value);
-    let dataTypeBy = dataFilterBy.filter(data => data.value === event.target.value) 
-    let listDropdownOperator = dataFilterOperator.filter((item) => item.DataType === dataTypeBy[0].Type)
+    let dataTypeBy = dataFilterBy.filter(
+      (data) => data.value === event.target.value
+    );
+    let listDropdownOperator = dataFilterOperator.filter(
+      (item) => item.DataType === dataTypeBy[0].Type
+    );
     const newFormValues = [...formValues];
     newFormValues[i][event.target.name] = event.target.value;
-    console.log(i);
+    newFormValues[i][event.target.dataset.space] = listDropdownOperator;
     setFormValues(newFormValues);
-    const newListOperater = [...listOperator];
-    newListOperater[i] = listDropdownOperator;
-    console.log(newListOperater[i]);
-    setFormValues(newFormValues);
-    setListOperator(newListOperater[i]);
-    console.log(listOperator);
-    // if(listDropdownOperator.length === 1) {
-    //   handleChangeOperator(listDropdownOperator[0].Operator);
-    // }
   };
 
   const handleChangeOperator = (i, event) => {
-    let dataTypeBy = dataFilterBy.filter(data => data.value === byValues);
-    console.log(dataTypeBy[0].Type);
-    let dataOperator = dataFilterOperator.filter((item) => item.Operator === event.target.value && item.DataType === dataTypeBy[0].Type)
-    // setOperatorValues(event.target.value);
-    console.log(dataOperator);
-    // setDataType(dataOperator[0].DataType);
-    // setOperator(dataOperator[0].Operator);
-    const newFormValues = [...formValues];
-    newFormValues[i][event.target.name] = event.target.value;
-    setFormValues(newFormValues);
-    const DataType = [...dataType];
-    DataType[i] = dataOperator[0].DataType;
-    setDataType(DataType[i]);
-    const NewOperator = [...Operator];
-    NewOperator[i] = dataOperator[0].Operator;
-    setOperator(NewOperator[i]);
-    // setFormValue(dataOperator[0].DataType);
+    let dataTypeBy = dataFilterBy.filter((data) => data.value === byValues);
+    
+    let dataOperator = dataFilterOperator.filter(
+      (item) =>
+        item.Operator === event.target.value &&
+        item.DataType === dataTypeBy[0].Type
+    );
+    if(dataOperator[0] !== undefined){
+      const newFormValues = [...formValues];
+      newFormValues[i][event.target.name] = event.target.value;
+      newFormValues[i][event.target.dataset.txt] = dataOperator[0].DataType;
+      newFormValues[i][event.target.dataset.space] = dataOperator[0].Operator;
+      setFormValues(newFormValues);
+    }
   };
 
-
   const handleChangeValue = (i, event) => {
-    setValues(event.target.value)
     const newFormValuesFilter = [...formValues];
     newFormValuesFilter[i][event.target.name] = event.target.value;
     setFormValues(newFormValuesFilter);
   };
 
+  const handleChangeValue1 = (i, event) => {
+    const newFormValuesFilter = [...formValues];
+    newFormValuesFilter[i][event.target.name] = event.target.value;
+    setFormValues(newFormValuesFilter);
+  };
+
+  const  handleChangeValueOther  =  (i, data)  => {
+    setSelectedValueOther(data);
+    const newFormValuesFilter = [...formValues];
+    newFormValuesFilter[i][data[0].name] = data;
+    setFormValues(newFormValuesFilter);
+  }
+
   const addFormFields = () => {
-    setFormValues([...formValues, { by: "", operator: "", value:"" }]);
+    if (formValues.length === 10) {
+    } else {
+      setFormValues([
+        ...formValues,
+        { by: "", operator: "", value: "", value1: "", valueOther: [],listOperator: [], dataType: "",Operator: "" },
+      ]);
+    }
   };
 
   const removeFormFields = (i) => {
@@ -91,7 +119,9 @@ function SearchInvoices() {
       newFormValues.splice(i, 1);
       setFormValues(newFormValues);
     } else if (i === 0 && newFormValues.length === 1) {
-      setFormValues([{ by: "", operator: "", value:"" }]);
+      setFormValues([
+        { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], dataType: "",Operator: "" },
+      ]);
     } else if (i === 0 && newFormValues.length > 1) {
       newFormValues.shift();
       setFormValues(newFormValues);
@@ -99,32 +129,170 @@ function SearchInvoices() {
   };
 
   const showData = () => {
-    alert(JSON.stringify(formValues));
+    // const valueOther = selectedValueOther.split(",");
+    let dataFilted = [];
+    const datafilter = uniqueFilters.map((itemFilter) => itemFilter);
+    if(datafilter[0].by !== ''){
+      data.map((itemX) => {
+
+        datafilter.map((i) => {
+          const date = new Date(itemX.Date);
+          const date1 = new Date(i.value);
+          const date2 = new Date(i.value1);
+          if (i.by === "Company") {
+            if (itemX.Organisation === i.value) {
+              if(dataFilted.indexOf(itemX) < 0){
+                dataFilted.push(itemX);
+              }
+            }
+          } else {
+            if (i.by === "Date") {
+              if (
+                i.operator === "between" &&
+                date > date1 && date < date2
+              ) {
+                if(dataFilted.indexOf(itemX) < 0){
+                  dataFilted.push(itemX);
+                }
+              } else {
+                if (i.operator === "on or after" && itemX.Date <= i.value) {
+                  if(dataFilted.indexOf(itemX) < 0){
+                    dataFilted.push(itemX);
+                  }
+                } else {
+                  if (i.operator === "on or before" && itemX.Date >= i.value) {
+                    if(dataFilted.indexOf(itemX) < 0){
+                      dataFilted.push(itemX);
+                    }
+                  }
+                }
+              }
+            } else {
+              if (i.by === "Amount") {
+                if (i.operator === "is" && itemX.Total === i.value) {
+                  if(dataFilted.indexOf(itemX) < 0){
+                    dataFilted.push(itemX);
+                  }
+                } else {
+                  if (i.operator === "more than" && itemX.Total > i.value) {
+                    if(dataFilted.indexOf(itemX) < 0){
+                      dataFilted.push(itemX);
+                    }
+                  } else {
+                    if (i.operator === "less than" && itemX.Total < i.value) {
+                      if(dataFilted.indexOf(itemX) < 0){
+                        dataFilted.push(itemX);
+                      }
+                    }
+                  }
+                }
+              } else {
+                if (i.by === "invoice No") {
+                  if (i.operator === "is" && itemX.invoiceNo === i.value) {
+                    if(dataFilted.indexOf(itemX) < 0){
+                      dataFilted.push(itemX);
+                    }
+                  } else {
+                    if (
+                      i.operator === "contains" &&
+                      itemX.invoiceNo.includes(i.value)
+                    ) {
+                      if(dataFilted.indexOf(itemX) < 0){
+                        dataFilted.push(itemX);
+                      }
+                    }
+                  }
+                } else {
+                  if (i.by === "Order No") {
+                    if (i.operator === "is" && itemX.orderNo === i.value) {
+                      if(dataFilted.indexOf(itemX) < 0){
+                        dataFilted.push(itemX);
+                      }
+                    } else {
+                      if (
+                        i.operator === "contains" &&
+                        itemX.invoiceNo.includes(i.value)
+                      ) {
+                        if(dataFilted.indexOf(itemX) < 0){
+                          dataFilted.push(itemX);
+                        }
+                      }
+                    }
+                  } else {
+                    if (i.by === "Other"){
+                      if(i.operator === "includes"){
+                        i.valueOther.map(item => {
+                          if(itemX.Invoice_Type.includes(item.value) && item.type === "Invoice_Type"){
+                            if(dataFilted.indexOf(itemX) < 0){
+                              dataFilted.push(itemX);
+                            }
+                          }else {
+                            if(itemX.IsCleared === item.data && item.type === "IsCleared"){
+                              if(dataFilted.indexOf(itemX) < 0){
+                                dataFilted.push(itemX);
+                              }
+                            }else {
+                              if(itemX.IsExported === item.data && item.type === "IsExported"){
+                                if(dataFilted.indexOf(itemX) < 0){
+                                  dataFilted.push(itemX);
+                                }
+                              }else {
+                                if(itemX.IsQuery === item.data && item.type === "IsQuery"){
+                                  if(dataFilted.indexOf(itemX) < 0){
+                                    dataFilted.push(itemX);
+                                  }
+                                }else {
+                                  if(itemX.Status === item.data && item.type === "Status"){
+                                    if(dataFilted.indexOf(itemX) < 0){
+                                      dataFilted.push(itemX);
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        })                       
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        });
+      });
+      console.log(dataFilted);
+      setInvoices(dataFilted);
+      setTotalItems(dataFilted.length);
+      setCurrentPage(1);
+    }else {
+      setInvoices(data);
+    }
   };
 
   const invoicesData = useMemo(() => {
-    let computedInvoices = invoices;
+    let Invoices = invoices;
 
-    if (search){
-      computedInvoices = computedInvoices.filter(
-        comment => 
-        comment.OrderNo.toLowerCase().includes(search.toLowerCase()) || 
-        comment.Organisation.toLowerCase().includes(search.toLowerCase())
+    if (search) {
+      Invoices = Invoices.filter(
+        (comment) =>
+          comment.OrderNo.toLowerCase().includes(search.toLowerCase()) ||
+          comment.Organisation.toLowerCase().includes(search.toLowerCase())
       );
     }
-    setTotalItems(computedInvoices.length);
+    setTotalItems(Invoices.length);
 
-    return computedInvoices.slice(
+    return Invoices.slice(
       (currentPage - 1) * ITEMS_PER_PAGE,
       (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE
     );
   }, [invoices, currentPage, search]);
-  
+
   return (
     <div>
       <Navbar className="navbar" style={{ marginBottom: 20 }}>
         <p className="text">invoice v</p>
-        <div className="col-md-2" style={{ marginLeft: "77%" }}>
+        <div className="col-md-2" style={{ left: "77%" }}>
           <input
             className="form-control"
             type="search"
@@ -173,24 +341,21 @@ function SearchInvoices() {
       </div>
       <Collapse in={open}>
         <div className="filter-container">
-          {formValues.map((element, index) => (
-            <div
-              className="form-inline"
-               key={index}
-            >
+          {uniqueFilters.slice(0, 10).map((element, index) => (
+            <div className="form-inline" key={index}>
               <div className="filter-by">
                 <label id="by">Filter By:</label>
                 <select
                   id="by"
                   name="by"
+                  data-space="listOperator"
                   className="filter-by-select"
                   value={element.by}
                   onChange={(e) => handleChangeBy(index, e)}
                 >
+                  <option value={""}> select your filter by</option>
                   {dataFilterBy.map((item) => (
-                    <option key={item.id}>
-                      {item.name}
-                    </option>
+                    <option key={item.id}>{item.name}</option>
                   ))}
                 </select>
               </div>
@@ -199,18 +364,19 @@ function SearchInvoices() {
                 <select
                   id="operator"
                   name="operator"
+                  data-space="Operator"
+                  data-txt="dataType"
                   className="filter-operator-select"
                   value={element.operator}
                   onChange={(e) => handleChangeOperator(index, e)}
                 >
-                  {listOperator.map((element, index) => (
-                    <option key={index}>
-                      {element.Operator}
-                    </option>
+                  <option value={""}> select your filter operator</option>
+                  {element.listOperator.map((element, index) => (
+                    <option key={index}>{element.Operator}</option>
                   ))}
                 </select>
               </div>
-              {dataType === "Hierarchy" ? (
+              {element.dataType === "Hierarchy" ? (
                 <div className="filter-value">
                   <label id="value">Filter Value:</label>
                   <select
@@ -220,21 +386,23 @@ function SearchInvoices() {
                     value={element.value}
                     onChange={(e) => handleChangeValue(index, e)}
                   >
+                    <option value={""}> select your filter value</option>
                     {dataCompany.map((item) => (
                       <option key={item.id} value={item.value}>
-                        {item.Operator}
+                        {item.name}
                       </option>
                     ))}
                   </select>
                 </div>
-              ) : dataType === "Date" ? (
-                Operator === "between" ? (
+              ) : element.dataType === "Date" ? (
+                element.Operator === "between" ? (
                   <div className="filter-value">
                     <label id="date">Filter Value:</label>
                     <input
                       type="date"
                       id="value"
                       name="value"
+                      className="filter-value-input"
                       value={element.value}
                       onChange={(e) => handleChangeValue(index, e)}
                     ></input>
@@ -242,9 +410,10 @@ function SearchInvoices() {
                     <input
                       type="date"
                       id="value"
-                      name="value"
-                      value={element.value}
-                      onChange={(e) => handleChangeValue(index, e)}
+                      name="value1"
+                      className="filter-value-input"
+                      value={element.value1}
+                      onChange={(e) => handleChangeValue1(index, e)}
                     ></input>
                   </div>
                 ) : (
@@ -254,12 +423,13 @@ function SearchInvoices() {
                       type="date"
                       id="value"
                       name="value"
+                      className="filter-value-input"
                       value={element.value}
                       onChange={(e) => handleChangeValue(index, e)}
                     ></input>
                   </div>
                 )
-              ) : dataType === "Number" ? (
+              ) : element.dataType === "Number" ? (
                 <div className="filter-value">
                   <label id="date">Filter Value:</label>
                   <input
@@ -268,55 +438,51 @@ function SearchInvoices() {
                     name="value"
                     min="1"
                     step="0.01"
+                    className="filter-value-input"
                     value={element.value}
                     onChange={(e) => handleChangeValue(index, e)}
                   ></input>
                 </div>
-              ) : dataType === "Text" ? (
+              ) : element.dataType === "Text" ? (
                 <div className="filter-value">
                   <label id="text">Filter Value:</label>
                   <input
                     type="text"
                     id="value"
                     name="value"
+                    className="filter-value-input"
                     value={element.value}
                     onChange={(e) => handleChangeValue(index, e)}
                   ></input>
                 </div>
-              ) : (
+              ) : element.dataType === "List" ? (
                 <div className="filter-value">
-                  <label id="value">Filter Value:</label>
-                  <select
-                    id="value"
-                    name="value"
-                    className="filter-value-select"
-                    value={element.value}
-                    onChange={(e) => handleChangeValue(index, e)}
-                  >
-                    {dataCompany.map((item) => (
-                      <option key={item.id} value={item.value}>
-                        {item.Operator}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="preview-values">
+                    <label id="text">Filter Value:</label>
+                  </div>
+                  <div className="filter-value-other-select">
+                    <Select
+                      className="basic-multi-select"
+                      value={selectedValueOther}
+                      name="valueOther"
+                      defaultValue={options[0]}
+                      onChange={(e) => handleChangeValueOther(index, e)}
+                      isMulti
+                      options={options}
+                    />
+                  </div>
                 </div>
+              ) : (
+                <div className="filter-value"></div>
               )}
-              <button
-              type="button"
-              className="btn btn-danger ms-2"
-              onClick={() => removeFormFields(index)}
-            >
-              x
-            </button>
+              <a className="remove" onClick={() => removeFormFields(index)}>
+                <span className="glyphicon glyphicon-remove"></span>
+              </a>
             </div>
           ))}
-          <button
-          type="button"
-          className="btn btn-primary"
-          onClick={addFormFields}
-        >
-          Add More
-        </button>
+          <a className="add-more" onClick={addFormFields}>
+            <span className="glyphicon glyphicon-plus">More</span>
+          </a>
           <Button className="submit-filter" type="submit" onClick={showData}>
             Search
           </Button>
@@ -367,8 +533,8 @@ function SearchInvoices() {
       </div>
 
       <Navbar className="button-group col-sm-2">
-        <Button className="approve">approve</Button>
-        <Button className="unapproved">unapproved</Button>
+        <Button className="approve">Approve</Button>
+        <Button className="unapproved">Unapproved</Button>
       </Navbar>
     </div>
   );

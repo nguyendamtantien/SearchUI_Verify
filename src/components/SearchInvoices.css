@@ -130,6 +130,10 @@ tr {
     float: left;
     background-color: #6f3996;
     border-radius: 5px;
+    align-items: center;
+    font-size: 13px;
+    padding: 15px 32px;
+    margin: 4px 2px;
 }
 .approve:focus{
     background-color: #6f3996;
@@ -148,6 +152,10 @@ tr {
     float: left;
     background-color: #6f3996;
     border-radius: 5px;
+    align-items: center;
+    font-size: 13px;
+    padding: 15px 32px;
+    margin: 4px 2px;
 }
 .unapproved:focus{
     background-color: #6f3996;
@@ -161,38 +169,112 @@ tr {
 .filter-container{
     float: left;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    top: 30px;
 }
 .filter-by{
     margin-left: 70px; 
     font-size: medium;
     float: left;
     display: flex;
+    align-items: center;
 }
 .filter-operator{
     margin-left: 100px; 
     font-size: medium;
     float: left;
     display: flex; 
+    align-items: center;
 }
 .filter-value{
     margin-left: 100px; 
     font-size: medium;
     float: left;
     display: flex; 
+    align-items: center;
 }
 .filter-by-select{
     border-radius: 5px;
-    margin-left: 5px;
-    padding-right: 100px;
+    margin-left: 10px;
+    padding-right: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 2px solid #6f3996;
 }
 .filter-operator-select{
     border-radius: 5px;
-    margin-left: 5px; 
-    padding-right: 100px;
+    margin-left: 10px; 
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 2px solid #6f3996;
 }
 .filter-value-select{
     border-radius: 5px;
-    margin-left: 5px; 
-    padding-right: 100px;
+    margin-left: 10px; 
+    padding-right: 20px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 2px solid #6f3996;
+}
+.filter-value-other-select {
+    border-radius: 5px;
+    border: 2px solid #6f3996;
+    margin-left: 10px;
+    width: 500px;
+  }
+.css-1pahdxg-control:hover{
+    border-color: #6f3996 !important;
+}
+.filter-value-input{
+    border-radius: 5px;
+    margin-left: 10px; 
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 2px solid #6f3996;
+}
+.add-more{
+    color: black;
+    margin-left: 1500px;
+}
+.add-more:active{
+    color: lightgray !important;
+}
+.add-more:hover{
+    color: lightgray !important;
+}
+.submit-filter{
+    padding: 5px 20px 7px 20px;
+    margin-top: 30px;
+    border: 0;
+    outline: none !important;
+    color: white;
+    float: right;
+    background-color: #6f3996;
+    border-radius: 5px;
+    align-items: center;
+}
+.submit-filter:focus{
+    background-color: #6f3996;
+}
+.submit-filter:active{
+    background-color: lightgray !important;
+}
+.submit-filter:hover{
+    background-color: lightgray !important;
+}
+.remove{
+    position: relative;
+    color: black;
+    margin-left: 30px;
+    top: 9px;
+}
+.remove:active{
+    color: lightgray !important;
+}
+.remove:hover{
+    color: lightgray !important;
+}
+.form-inline{
+    padding-bottom: 20px;
 }
