@@ -48,7 +48,7 @@ function SearchInvoices() {
 
       return true;
     }
-
+    formValues.splice(formValues.indexOf(element), 1);
     return false;
   });
 
@@ -108,7 +108,7 @@ function SearchInvoices() {
     } else {
       setFormValues([
         ...formValues,
-        { by: "", operator: "", value: "", value1: "", valueOther: [],listOperator: [], dataType: "",Operator: "" },
+        { by: "", operator: "", value: "", value1: "", valueOther: [],listOperator: [], dataType: "", Operator: "" },
       ]);
     }
   };
@@ -120,7 +120,7 @@ function SearchInvoices() {
       setFormValues(newFormValues);
     } else if (i === 0 && newFormValues.length === 1) {
       setFormValues([
-        { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], dataType: "",Operator: "" },
+        { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], dataType: "", Operator: "" },
       ]);
     } else if (i === 0 && newFormValues.length > 1) {
       newFormValues.shift();
@@ -525,9 +525,9 @@ function SearchInvoices() {
               <td>{item.Tax}</td>
               <td>{item.Total}</td>
               <td>{item.Invoice_Type}</td>
-              <td>{item.IsCleared ? "Yes" :" No"}</td>
-              <td>{item.IsExported ? "Yes" :" No"}</td>
-              <td>{item.IsQuery ? "Yes" :" No"}</td>
+              <td>{item.IsCleared ? <i class="glyphicon glyphicon-ok"></i> : <i class="glyphicon glyphicon-remove"></i>}</td>
+              <td>{item.IsExported ? <i class="glyphicon glyphicon-ok"></i> : <i class="glyphicon glyphicon-remove"></i>}</td>
+              <td>{item.IsQuery ? <i class="glyphicon glyphicon-ok"></i> : <i class="glyphicon glyphicon-remove"></i>}</td>
               <td>{item.Status}</td>
             </tr>
           ))}
