@@ -96,7 +96,11 @@ function SearchInvoices() {
 
   const handleChangeValue = (i, event) => {
     if(byValues === "Company"){
-      setListPopup(dataCompany)
+      dataCompany.map((data) => {
+        if(data.value === event.target.value) {
+          setListPopup(data.children)
+        }
+      })
     }
     const newFormValuesFilter = [...formValues];
     newFormValuesFilter[i][event.target.name] = event.target.value;
