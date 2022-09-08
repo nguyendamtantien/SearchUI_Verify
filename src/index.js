@@ -5,6 +5,7 @@ import './index.css';
 import NavScroll from './components/Navbar';
 import SearchInvoices from './components/SearchInvoices';
 import reportWebVitals from './reportWebVitals';
+import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -8,6 +8,7 @@ import Collapse from "react-bootstrap/Collapse";
 import Table from "react-bootstrap/Table";
 // import MultiSelect from  'react-multiple-select-dropdown-lite'
 // import  'react-multiple-select-dropdown-lite/dist/index.css'
+import CheckboxTree from 'react-checkbox-tree';
 import Select from 'react-select';
 import "./SearchInvoices.css";
 import data from "../DataMock.json";
@@ -16,8 +17,14 @@ import dataFilterOperator from "../DataMockFilterOperator.json";
 import dataCompany from "../DataMockCompany.json";
 import dataFilterOther from "../DataMockFilterOther.json";
 import Pagination from "./Pagination";
+import Popup from './Popup';
 
 function SearchInvoices() {
+
+  const [listPopup, setListPopup] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [checked, setChecked] = useState([]);
+  const [expanded, setExpanded] = useState([]);
   const [selectedValueOther, setSelectedValueOther] = useState("");
 
   const  options  = dataFilterOther
@@ -29,7 +36,7 @@ function SearchInvoices() {
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [formValues, setFormValues] = useState([
-    { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], dataType: "", Operator: ""},
+    { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], ListSelectedCustomerOrganisation: [], dataType: "", Operator: ""},
   ]);
   const [byValues, setByValues] = useState("");
   const ITEMS_PER_PAGE = 3;
@@ -52,6 +59,9 @@ function SearchInvoices() {
     return false;
   });
 
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  }
 
   const handleChangeBy = (i, event) => {
     setByValues(event.target.value);
@@ -85,8 +95,19 @@ function SearchInvoices() {
   };
 
   const handleChangeValue = (i, event) => {
+    if(byValues === "Company"){
+      setListPopup(dataCompany)
+    }
     const newFormValuesFilter = [...formValues];
     newFormValuesFilter[i][event.target.name] = event.target.value;
+    setFormValues(newFormValuesFilter);
+  };
+  const handleChangeValuePopup = (i, event) => {
+    setIsOpen(!isOpen);
+    console.log(checked);
+    console.log(expanded);
+    const newFormValuesFilter = [...formValues];
+    newFormValuesFilter[i][event.target.name] = checked;
     setFormValues(newFormValuesFilter);
   };
 
@@ -108,7 +129,7 @@ function SearchInvoices() {
     } else {
       setFormValues([
         ...formValues,
-        { by: "", operator: "", value: "", value1: "", valueOther: [],listOperator: [], dataType: "", Operator: "" },
+        { by: "", operator: "", value: "", value1: "", valueOther: [],listOperator: [], ListSelectedCustomerOrganisation: [], dataType: "", Operator: "" },
       ]);
     }
   };
@@ -120,7 +141,7 @@ function SearchInvoices() {
       setFormValues(newFormValues);
     } else if (i === 0 && newFormValues.length === 1) {
       setFormValues([
-        { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], dataType: "", Operator: "" },
+        { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], ListSelectedCustomerOrganisation: [], dataType: "", Operator: "" },
       ]);
     } else if (i === 0 && newFormValues.length > 1) {
       newFormValues.shift();
@@ -129,6 +150,7 @@ function SearchInvoices() {
   };
 
   const showData = () => {
+    console.log(uniqueFilters);
     // const valueOther = selectedValueOther.split(",");
     let dataFilted = [];
     const datafilter = uniqueFilters.map((itemFilter) => itemFilter);
@@ -141,9 +163,19 @@ function SearchInvoices() {
           const date2 = new Date(i.value1);
           if (i.by === "Company") {
             if (itemX.Organisation === i.value) {
-              if(dataFilted.indexOf(itemX) < 0){
-                dataFilted.push(itemX);
-              }
+              i.ListSelectedCustomerOrganisation.filter(item => {
+                if(itemX.CustomerOrganisation === item){
+                  if(dataFilted.indexOf(itemX) < 0){
+                    dataFilted.push(itemX);
+                  }
+                }else {
+                  if(item === ""){
+                    if(dataFilted.indexOf(itemX) < 0){
+                      dataFilted.push(itemX);
+                    }
+                  }
+                }
+              });
             }
           } else {
             if (i.by === "Date") {
@@ -393,6 +425,63 @@ function SearchInvoices() {
                       </option>
                     ))}
                   </select>
+                  <button onClick={togglePopup}>
+                    <i className="bi bi-three-dots"></i>
+                  </button>
+                  {isOpen && (
+                    <Popup
+                      content={
+                        <>
+                          <div className="nav-popup">Customer Organisation</div>
+                          <select
+                            id="value"
+                            name="value"
+                            className="filter-value-select"
+                            value={element.value}
+                            onChange={(e) => handleChangeValue(index, e)}
+                          >
+                            <option value={""}>
+                              {" "}
+                              select your filter value
+                            </option>
+                            {dataCompany.map((item) => (
+                              <option key={item.id} value={item.value}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="list-tree">
+                            <CheckboxTree
+                              showNodeIcon={false}
+                              nativeCheckboxes={true}
+                              iconsClass="fa5"
+                              nodes={listPopup}
+                              checked={checked}
+                              expanded={expanded}
+                              onCheck={(checked) => setChecked(checked)}
+                              onExpand={(expanded) => setExpanded(expanded)}
+                            />
+                          </div>
+                          <button
+                            name="ListSelectedCustomerOrganisation"
+                            type="submit"
+                            value={checked}
+                            onClick={(e) => handleChangeValuePopup(index, e)}
+                            className="button-popup-ok"
+                          >
+                            OK
+                          </button>
+                          <button
+                            className="button-popup-close"
+                            onClick={togglePopup}
+                          >
+                            Close
+                          </button>
+                        </>
+                      }
+                      handleClose={togglePopup}
+                    />
+                  )}
                 </div>
               ) : element.dataType === "Date" ? (
                 element.Operator === "between" ? (
@@ -475,17 +564,21 @@ function SearchInvoices() {
               ) : (
                 <div className="filter-value"></div>
               )}
-              <a className="remove" onClick={() => removeFormFields(index)}>
-                <span className="glyphicon glyphicon-remove"></span>
-              </a>
+              <div>
+                <a className="remove" onClick={() => removeFormFields(index)}>
+                  <span className="glyphicon glyphicon-remove"></span>
+                </a>
+              </div>
             </div>
           ))}
-          <a className="add-more" onClick={addFormFields}>
-            <span className="glyphicon glyphicon-plus">More</span>
-          </a>
-          <Button className="submit-filter" type="submit" onClick={showData}>
-            Search
-          </Button>
+          <div>
+            <a className="add-more" onClick={addFormFields}>
+              <span className="glyphicon glyphicon-plus">More</span>
+            </a>
+            <Button className="submit-filter" type="submit" onClick={showData}>
+              Search
+            </Button>
+          </div>
         </div>
       </Collapse>
 
@@ -500,6 +593,7 @@ function SearchInvoices() {
             <th>OrderNo</th>
             <th>Date</th>
             <th>Organisation</th>
+            <th>Customer Organisation</th>
             <th>Net</th>
             <th>Tax</th>
             <th>Total</th>
@@ -521,13 +615,32 @@ function SearchInvoices() {
               <td>{item.OrderNo}</td>
               <td>{item.Date}</td>
               <td>{item.Organisation}</td>
+              <td>{item.CustomerOrganisation}</td>
               <td>{item.Net}</td>
               <td>{item.Tax}</td>
               <td>{item.Total}</td>
               <td>{item.Invoice_Type}</td>
-              <td>{item.IsCleared ? <i class="glyphicon glyphicon-ok"></i> : <i class="glyphicon glyphicon-remove"></i>}</td>
-              <td>{item.IsExported ? <i class="glyphicon glyphicon-ok"></i> : <i class="glyphicon glyphicon-remove"></i>}</td>
-              <td>{item.IsQuery ? <i class="glyphicon glyphicon-ok"></i> : <i class="glyphicon glyphicon-remove"></i>}</td>
+              <td>
+                {item.IsCleared ? (
+                  <i className="glyphicon glyphicon-ok"></i>
+                ) : (
+                  <i className="glyphicon glyphicon-remove"></i>
+                )}
+              </td>
+              <td>
+                {item.IsExported ? (
+                  <i className="glyphicon glyphicon-ok"></i>
+                ) : (
+                  <i className="glyphicon glyphicon-remove"></i>
+                )}
+              </td>
+              <td>
+                {item.IsQuery ? (
+                  <i className="glyphicon glyphicon-ok"></i>
+                ) : (
+                  <i className="glyphicon glyphicon-remove"></i>
+                )}
+              </td>
               <td>{item.Status}</td>
             </tr>
           ))}

@@ -278,3 +278,40 @@ tr {
 .form-inline{
     padding-bottom: 20px;
 }
+.nav-popup{
+    background-color: #6f3996;
+    color: white;
+    padding: 10px;
+}
+.button-popup-ok{
+    margin-left: -7px;
+    border: 0;
+    outline: none !important;
+    color: white;
+    float: left;
+    background-color: #6f3996;
+    border-radius: 5px;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 5px 20px;
+    margin: 4px 2px;
+}
+.button-popup-close{
+    margin-left: -7px;
+    border: 0;
+    outline: none !important;
+    color: #6f3996;
+    float: left;
+    background-color: white;
+    border-radius: 5px;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 5px 20px;
+    margin: 4px 2px;
+}
+.list-tree{
+    max-height: 50vh;
+    overflow-y: auto;
+}

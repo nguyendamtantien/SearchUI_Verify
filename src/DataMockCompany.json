@@ -1,34 +1,266 @@
 [
     {
-        "id": 1,
-        "name": "BA"
+      "id": 1,
+      "value": "BA",
+      "label": "BA",
+      "name": "BA",
+      "children": [
+        {
+          "value": "Archived K",
+          "label": "Archived K",
+          "children": [
+            {
+              "value": "Archived K1",
+              "label": "Archived K1"
+            },
+            {
+              "value": "Archived K2",
+              "label": "Archived K2"
+            },
+            {
+              "value": "Archived K3",
+              "label": "Archived K3"
+            },
+            {
+              "value": "Archived K4",
+              "label": "Archived K4"
+            },
+            {
+              "value": "Archived K5",
+              "label": "Archived K5"
+            },
+            {
+              "value": "Archived K6",
+              "label": "Archived K6"
+            },
+            {
+              "value": "Archived K7",
+              "label": "Archived K7"
+            },
+            {
+              "value": "Archived K8",
+              "label": "Archived K8"
+            }
+          ]
+        },
+        {
+          "value": "CORDA",
+          "label": "CORDA",
+          "children": [
+            {
+              "value": "CORDA1",
+              "label": "CORDA1"
+            },
+            {
+              "value": "CORDA2",
+              "label": "CORDA2"
+            }
+          ]
+        }
+      ]
     },
     {
         "id": 2,
-        "name": "BA"
+        "value": "AB",
+        "label":"AB",
+        "name": "AB",
+        "children": [
+          {
+            "value": "Archived E",
+            "label": "Archived E",
+            "children": [
+              {
+                "value": "Archived E1",
+                "label": "Archived E1"
+              },
+              {
+                "value": "Archived E2",
+                "label": "Archived E2"
+              },
+              {
+                "value": "Archived E3",
+                "label": "Archived E3"
+              },
+              {
+                "value": "Archived E4",
+                "label": "Archived E4"
+              },
+              {
+                "value": "Archived E5",
+                "label": "Archived E5"
+              },
+              {
+                "value": "Archived E6",
+                "label": "Archived E6"
+              },
+              {
+                "value": "Archived E7",
+                "label": "Archived E7"
+              },
+              {
+                "value": "Archived E8",
+                "label": "Archived E8"
+              }
+            ]
+          },
+          {
+            "value": "CORDA E",
+            "label": "CORDA E",
+            "children": [
+              {
+                "value": "CORDA E1",
+                "label": "CORDA E1"
+              },
+              {
+                "value": "CORDA E2",
+                "label": "CORDA E2"
+              }
+            ]
+          }
+        ]
     },
     {
         "id": 3,
-        "name": "BA"
+        "value": "BC",
+        "label":"BC",
+        "name": "BC",
+        "children": [
+          {
+            "value": "Archived B",
+            "label": "Archived B",
+            "children": [
+              {
+                "value": "Archived B1",
+                "label": "Archived B1"
+              },
+              {
+                "value": "Archived B2",
+                "label": "Archived B2"
+              }
+            ]
+          },
+          {
+            "value": "CORDA B",
+            "label": "CORDA B",
+            "children": [
+              {
+                "value": "CORDA B1",
+                "label": "CORDA B1"
+              },
+              {
+                "value": "CORDA B2",
+                "label": "CORDA B2"
+              }
+            ]
+          }
+        ]
     },
     {
         "id": 4,
-        "name": "BA"
+        "value": "RC",
+        "label":"RC",
+        "name": "RC",
+        "children": [
+          {
+            "value": "Archived R",
+            "label": "Archived R",
+            "children": [
+              {
+                "value": "Archived R1",
+                "label": "Archived R1"
+              },
+              {
+                "value": "Archived R2",
+                "label": "Archived R2"
+              }
+            ]
+          },
+          {
+            "value": "CORDA R",
+            "label": "CORDA R",
+            "children": [
+              {
+                "value": "CORDA R1",
+                "label": "CORDA R1"
+              },
+              {
+                "value": "CORDA R2",
+                "label": "CORDA R2"
+              }
+            ]
+          }
+        ]
     },
     {
         "id": 5,
-        "name": "BA"
+        "value": "CE",
+        "label":"CE",
+        "name": "CE",
+        "children": [
+          {
+            "value": "Archived CE",
+            "label": "Archived CE",
+            "children": [
+              {
+                "value": "Archived CE1",
+                "label": "Archived CE1"
+              },
+              {
+                "value": "Archived CE2",
+                "label": "Archived CE2"
+              }
+            ]
+          },
+          {
+            "value": "CORDA CE",
+            "label": "CORDA CE",
+            "children": [
+              {
+                "value": "CORDA CE1",
+                "label": "CORDA CE1"
+              },
+              {
+                "value": "CORDA CE2",
+                "label": "CORDA CE2"
+              }
+            ]
+          }
+        ]
     },
     {
         "id": 6,
-        "name": "BA"
-    },
-    {
-        "id": 7,
-        "name": "BA"
-    },
-    {
-        "id": 8,
-        "name": "BA"
+        "value": "MM",
+        "label":"MM",
+        "name": "MM",
+        "children": [
+          {
+            "value": "Archived MM",
+            "label": "Archived MM",
+            "children": [
+              {
+                "value": "Archived MM1",
+                "label": "Archived MM1"
+              },
+              {
+                "value": "Archived MM2",
+                "label": "Archived MM2"
+              }
+            ]
+          },
+          {
+            "value": "CORDA MM",
+            "label": "CORDA MM",
+            "children": [
+              {
+                "value": "CORDA MM1",
+                "label": "CORDA MM1"
+              },
+              {
+                "value": "CORDA MM2",
+                "label": "CORDA MM2"
+              }
+            ]
+          }
+        ]
     }
 ]

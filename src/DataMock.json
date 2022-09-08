@@ -1,32 +1,32 @@
 [
     {
-        "invoiceNo": "123A", "OrderNo": "BA-123", "Date": "2022-08-17", "Organisation": "BA", "Net": 50, "Tax": 10, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
+        "invoiceNo": "123A", "OrderNo": "BA-123", "Date": "2022-08-17", "Organisation": "BA","CustomerOrganisation": "Archived K1", "Net": 50, "Tax": 10, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
     },
     {
-        "invoiceNo": "123B", "OrderNo": "BABA-123", "Date": "2022-08-20", "Organisation": "BA", "Net": 51, "Tax": 11, "Total": 100, "Invoice_Type": "Credits", "IsCleared": false, "IsExported": false, "IsQuery": false, "Status": "Unapproved"
+        "invoiceNo": "123B", "OrderNo": "BABA-123", "Date": "2022-08-20", "Organisation": "BA","CustomerOrganisation": "Archived K2", "Net": 51, "Tax": 11, "Total": 100, "Invoice_Type": "Credits", "IsCleared": false, "IsExported": false, "IsQuery": false, "Status": "Unapproved"
     },
     {
-        "invoiceNo": "123C", "OrderNo": "ABBA-123", "Date": "2022-08-10", "Organisation": "AB", "Net": 52, "Tax": 12, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": false, "IsQuery": true, "Status": "Unapproved"
+        "invoiceNo": "123C", "OrderNo": "ABBA-123", "Date": "2022-08-10", "Organisation": "AB","CustomerOrganisation": "Archived E1", "Net": 52, "Tax": 12, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": false, "IsQuery": true, "Status": "Unapproved"
     },
     {
-        "invoiceNo": "123D", "OrderNo": "BCBA-123", "Date": "2022-08-1", "Organisation": "BC", "Net": 53, "Tax": 13, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
+        "invoiceNo": "123D", "OrderNo": "BCBA-123", "Date": "2022-08-1", "Organisation": "BC","CustomerOrganisation": "Archived B1", "Net": 53, "Tax": 13, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
     },
     {
-        "invoiceNo": "123E", "OrderNo": "BABA-123", "Date": "2022-08-15", "Organisation": "BA", "Net": 54, "Tax": 14, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": false, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
+        "invoiceNo": "123E", "OrderNo": "BABA-123", "Date": "2022-08-15", "Organisation": "BA","CustomerOrganisation": "Archived K3", "Net": 54, "Tax": 14, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": false, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
     },
     {
-        "invoiceNo": "123F", "OrderNo": "BABA-123", "Date": "2022-08-17", "Organisation": "BA", "Net": 55, "Tax": 15, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": false, "Status": "Unapproved"
+        "invoiceNo": "123F", "OrderNo": "BABA-123", "Date": "2022-08-17", "Organisation": "BA","CustomerOrganisation": "Archived K4", "Net": 55, "Tax": 15, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": false, "Status": "Unapproved"
     },
     {
-        "invoiceNo": "123G", "OrderNo": "BABA-123", "Date": "2022-08-13", "Organisation": "BA", "Net": 56, "Tax": 16, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": false, "IsExported": true, "IsQuery": false, "Status": "Unapproved"
+        "invoiceNo": "123G", "OrderNo": "BABA-123", "Date": "2022-08-13", "Organisation": "BA","CustomerOrganisation": "Archived K5", "Net": 56, "Tax": 16, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": false, "IsExported": true, "IsQuery": false, "Status": "Unapproved"
     },
     {
-        "invoiceNo": "123H", "OrderNo": "ABBA-123", "Date": "2022-08-17", "Organisation": "RC", "Net": 57, "Tax": 17, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": false, "IsQuery": false, "Status": "Unapproved"
+        "invoiceNo": "123H", "OrderNo": "ABBA-123", "Date": "2022-08-17", "Organisation": "RC","CustomerOrganisation": "Archived R1", "Net": 57, "Tax": 17, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": false, "IsQuery": false, "Status": "Unapproved"
     },
     {
-        "invoiceNo": "123J", "OrderNo": "BCBA-123", "Date": "2022-08-17", "Organisation": "CE", "Net": 58, "Tax": 18, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
+        "invoiceNo": "123J", "OrderNo": "BCBA-123", "Date": "2022-08-17", "Organisation": "CE","CustomerOrganisation": "Archived CE2", "Net": 58, "Tax": 18, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
     },
     {
-        "invoiceNo": "123K", "OrderNo": "ABBA-123", "Date": "2022-08-17", "Organisation": "MM", "Net": 59, "Tax": 19, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
+        "invoiceNo": "123K", "OrderNo": "ABBA-123", "Date": "2022-08-17", "Organisation": "MM","CustomerOrganisation": "Archived MM1", "Net": 59, "Tax": 19, "Total": 100, "Invoice_Type": "Invoices", "IsCleared": true, "IsExported": true, "IsQuery": true, "Status": "Unapproved"
     }
 ]
