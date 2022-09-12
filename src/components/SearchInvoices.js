@@ -9,6 +9,7 @@ import Table from "react-bootstrap/Table";
 // import MultiSelect from  'react-multiple-select-dropdown-lite'
 // import  'react-multiple-select-dropdown-lite/dist/index.css'
 import CheckboxTree from 'react-checkbox-tree';
+import Multiselect from 'multiselect-react-dropdown';
 import Select from 'react-select';
 import "./SearchInvoices.css";
 import data from "../DataMock.json";
@@ -21,22 +22,23 @@ import Popup from './Popup';
 
 function SearchInvoices() {
 
+  const optionsCompany = dataCompany;
+  const [selectedCompany, setSelectedCompany] = useState([]);
   const [listPopup, setListPopup] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [checked, setChecked] = useState([]);
   const [expanded, setExpanded] = useState([]);
   const [selectedValueOther, setSelectedValueOther] = useState("");
 
-  const  options  = dataFilterOther
+  const options = dataFilterOther
 
   const [invoices, setInvoices] = useState([]);
-  // const [listOperator, setListOperator] = useState([{}]);
   const [search, setSearch] = useState("");
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [formValues, setFormValues] = useState([
-    { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], ListSelectedCustomerOrganisation: [], dataType: "", Operator: ""},
+    { by: "", operator: "", value: "", value1: "", valueCompany: [], valueOther: [], listOperator: [], ListSelectedCustomerOrganisation: [], dataType: "", Operator: "" },
   ]);
   const [byValues, setByValues] = useState("");
   const ITEMS_PER_PAGE = 3;
@@ -79,13 +81,13 @@ function SearchInvoices() {
 
   const handleChangeOperator = (i, event) => {
     let dataTypeBy = dataFilterBy.filter((data) => data.value === byValues);
-    
+
     let dataOperator = dataFilterOperator.filter(
       (item) =>
         item.Operator === event.target.value &&
         item.DataType === dataTypeBy[0].Type
     );
-    if(dataOperator[0] !== undefined){
+    if (dataOperator[0] !== undefined) {
       const newFormValues = [...formValues];
       newFormValues[i][event.target.name] = event.target.value;
       newFormValues[i][event.target.dataset.txt] = dataOperator[0].DataType;
@@ -95,23 +97,30 @@ function SearchInvoices() {
   };
 
   const handleChangeValue = (i, event) => {
-    if(byValues === "Company"){
-      dataCompany.map((data) => {
-        if(data.value === event.target.value) {
-          setListPopup(data.children)
-        }
-      })
-    }
     const newFormValuesFilter = [...formValues];
     newFormValuesFilter[i][event.target.name] = event.target.value;
     setFormValues(newFormValuesFilter);
   };
   const handleChangeValuePopup = (i, event) => {
     setIsOpen(!isOpen);
-    console.log(checked);
-    console.log(expanded);
     const newFormValuesFilter = [...formValues];
     newFormValuesFilter[i][event.target.name] = checked;
+    setFormValues(newFormValuesFilter);
+  };
+
+  const OnSelectedCompany = (i, event) => {
+    const type = "valueCompany";
+    setSelectedCompany(event);
+    setListPopup(event);
+    const newFormValuesFilter = [...formValues];
+    newFormValuesFilter[i][type] = event;
+    setFormValues(newFormValuesFilter);
+  }
+
+  const OnRemove = (i, event) => {
+    const type = "valueCompany";
+    const newFormValuesFilter = [...formValues];
+    newFormValuesFilter[i][type] = event;
     setFormValues(newFormValuesFilter);
   };
 
@@ -121,7 +130,7 @@ function SearchInvoices() {
     setFormValues(newFormValuesFilter);
   };
 
-  const  handleChangeValueOther  =  (i, data)  => {
+  const handleChangeValueOther = (i, data) => {
     setSelectedValueOther(data);
     const newFormValuesFilter = [...formValues];
     newFormValuesFilter[i][data[0].name] = data;
@@ -133,7 +142,7 @@ function SearchInvoices() {
     } else {
       setFormValues([
         ...formValues,
-        { by: "", operator: "", value: "", value1: "", valueOther: [],listOperator: [], ListSelectedCustomerOrganisation: [], dataType: "", Operator: "" },
+        { by: "", operator: "", value: "", value1: "", valueOther: [], listOperator: [], ListSelectedCustomerOrganisation: [], dataType: "", Operator: "" },
       ]);
     }
   };
@@ -155,10 +164,9 @@ function SearchInvoices() {
 
   const showData = () => {
     console.log(uniqueFilters);
-    // const valueOther = selectedValueOther.split(",");
     let dataFilted = [];
     const datafilter = uniqueFilters.map((itemFilter) => itemFilter);
-    if(datafilter[0].by !== ''){
+    if (datafilter[0].by !== '') {
       data.map((itemX) => {
 
         datafilter.map((i) => {
@@ -166,38 +174,41 @@ function SearchInvoices() {
           const date1 = new Date(i.value);
           const date2 = new Date(i.value1);
           if (i.by === "Company") {
-            if (itemX.Organisation === i.value) {
-              i.ListSelectedCustomerOrganisation.filter(item => {
-                if(itemX.CustomerOrganisation === item){
-                  if(dataFilted.indexOf(itemX) < 0){
+            i.valueCompany.filter(data => {
+              if (itemX.Organisation === data.value) {
+                if (i.ListSelectedCustomerOrganisation !== []) {
+                  i.ListSelectedCustomerOrganisation.filter(cus => {
+                    if (itemX.CustomerOrganisation === cus) {
+                      if (dataFilted.indexOf(itemX) < 0) {
+                        dataFilted.push(itemX);
+                      }
+                    }
+                  });
+                }
+                else {
+                  if (dataFilted.indexOf(itemX) < 0) {
                     dataFilted.push(itemX);
                   }
-                }else {
-                  if(item === ""){
-                    if(dataFilted.indexOf(itemX) < 0){
-                      dataFilted.push(itemX);
-                    }
-                  }
                 }
-              });
-            }
+              }
+            });
           } else {
             if (i.by === "Date") {
               if (
                 i.operator === "between" &&
                 date > date1 && date < date2
               ) {
-                if(dataFilted.indexOf(itemX) < 0){
+                if (dataFilted.indexOf(itemX) < 0) {
                   dataFilted.push(itemX);
                 }
               } else {
                 if (i.operator === "on or after" && itemX.Date <= i.value) {
-                  if(dataFilted.indexOf(itemX) < 0){
+                  if (dataFilted.indexOf(itemX) < 0) {
                     dataFilted.push(itemX);
                   }
                 } else {
                   if (i.operator === "on or before" && itemX.Date >= i.value) {
-                    if(dataFilted.indexOf(itemX) < 0){
+                    if (dataFilted.indexOf(itemX) < 0) {
                       dataFilted.push(itemX);
                     }
                   }
@@ -206,17 +217,17 @@ function SearchInvoices() {
             } else {
               if (i.by === "Amount") {
                 if (i.operator === "is" && itemX.Total === i.value) {
-                  if(dataFilted.indexOf(itemX) < 0){
+                  if (dataFilted.indexOf(itemX) < 0) {
                     dataFilted.push(itemX);
                   }
                 } else {
                   if (i.operator === "more than" && itemX.Total > i.value) {
-                    if(dataFilted.indexOf(itemX) < 0){
+                    if (dataFilted.indexOf(itemX) < 0) {
                       dataFilted.push(itemX);
                     }
                   } else {
                     if (i.operator === "less than" && itemX.Total < i.value) {
-                      if(dataFilted.indexOf(itemX) < 0){
+                      if (dataFilted.indexOf(itemX) < 0) {
                         dataFilted.push(itemX);
                       }
                     }
@@ -225,7 +236,7 @@ function SearchInvoices() {
               } else {
                 if (i.by === "invoice No") {
                   if (i.operator === "is" && itemX.invoiceNo === i.value) {
-                    if(dataFilted.indexOf(itemX) < 0){
+                    if (dataFilted.indexOf(itemX) < 0) {
                       dataFilted.push(itemX);
                     }
                   } else {
@@ -233,7 +244,7 @@ function SearchInvoices() {
                       i.operator === "contains" &&
                       itemX.invoiceNo.includes(i.value)
                     ) {
-                      if(dataFilted.indexOf(itemX) < 0){
+                      if (dataFilted.indexOf(itemX) < 0) {
                         dataFilted.push(itemX);
                       }
                     }
@@ -241,7 +252,7 @@ function SearchInvoices() {
                 } else {
                   if (i.by === "Order No") {
                     if (i.operator === "is" && itemX.orderNo === i.value) {
-                      if(dataFilted.indexOf(itemX) < 0){
+                      if (dataFilted.indexOf(itemX) < 0) {
                         dataFilted.push(itemX);
                       }
                     } else {
@@ -249,37 +260,37 @@ function SearchInvoices() {
                         i.operator === "contains" &&
                         itemX.invoiceNo.includes(i.value)
                       ) {
-                        if(dataFilted.indexOf(itemX) < 0){
+                        if (dataFilted.indexOf(itemX) < 0) {
                           dataFilted.push(itemX);
                         }
                       }
                     }
                   } else {
-                    if (i.by === "Other"){
-                      if(i.operator === "includes"){
+                    if (i.by === "Other") {
+                      if (i.operator === "includes") {
                         i.valueOther.map(item => {
-                          if(itemX.Invoice_Type.includes(item.value) && item.type === "Invoice_Type"){
-                            if(dataFilted.indexOf(itemX) < 0){
+                          if (itemX.Invoice_Type.includes(item.value) && item.type === "Invoice_Type") {
+                            if (dataFilted.indexOf(itemX) < 0) {
                               dataFilted.push(itemX);
                             }
-                          }else {
-                            if(itemX.IsCleared === item.data && item.type === "IsCleared"){
-                              if(dataFilted.indexOf(itemX) < 0){
+                          } else {
+                            if (itemX.IsCleared === item.data && item.type === "IsCleared") {
+                              if (dataFilted.indexOf(itemX) < 0) {
                                 dataFilted.push(itemX);
                               }
-                            }else {
-                              if(itemX.IsExported === item.data && item.type === "IsExported"){
-                                if(dataFilted.indexOf(itemX) < 0){
+                            } else {
+                              if (itemX.IsExported === item.data && item.type === "IsExported") {
+                                if (dataFilted.indexOf(itemX) < 0) {
                                   dataFilted.push(itemX);
                                 }
-                              }else {
-                                if(itemX.IsQuery === item.data && item.type === "IsQuery"){
-                                  if(dataFilted.indexOf(itemX) < 0){
+                              } else {
+                                if (itemX.IsQuery === item.data && item.type === "IsQuery") {
+                                  if (dataFilted.indexOf(itemX) < 0) {
                                     dataFilted.push(itemX);
                                   }
-                                }else {
-                                  if(itemX.Status === item.data && item.type === "Status"){
-                                    if(dataFilted.indexOf(itemX) < 0){
+                                } else {
+                                  if (itemX.Status === item.data && item.type === "Status") {
+                                    if (dataFilted.indexOf(itemX) < 0) {
                                       dataFilted.push(itemX);
                                     }
                                   }
@@ -287,7 +298,7 @@ function SearchInvoices() {
                               }
                             }
                           }
-                        })                       
+                        })
                       }
                     }
                   }
@@ -301,7 +312,7 @@ function SearchInvoices() {
       setInvoices(dataFilted);
       setTotalItems(dataFilted.length);
       setCurrentPage(1);
-    }else {
+    } else {
       setInvoices(data);
     }
   };
@@ -415,21 +426,14 @@ function SearchInvoices() {
               {element.dataType === "Hierarchy" ? (
                 <div className="filter-value">
                   <label id="value">Filter Value:</label>
-                  <select
-                    id="value"
-                    name="value"
-                    className="filter-value-select"
-                    value={element.value}
-                    onChange={(e) => handleChangeValue(index, e)}
-                  >
-                    <option value={""}> select your filter value</option>
-                    {dataCompany.map((item) => (
-                      <option key={item.id} value={item.value}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
-                  <button onClick={togglePopup}>
+                  <Multiselect
+                    options={optionsCompany}
+                    selectedValues={selectedCompany}
+                    onSelect={(e) => OnSelectedCompany(index, e)}
+                    onRemove={(e) => OnRemove(index, e)}
+                    displayValue="name"
+                  />
+                  <button className="button-three-dot"onClick={togglePopup}>
                     <i className="bi bi-three-dots"></i>
                   </button>
                   {isOpen && (
@@ -437,23 +441,13 @@ function SearchInvoices() {
                       content={
                         <>
                           <div className="nav-popup">Customer Organisation</div>
-                          <select
-                            id="value"
-                            name="value"
-                            className="filter-value-select"
-                            value={element.value}
-                            onChange={(e) => handleChangeValue(index, e)}
-                          >
-                            <option value={""}>
-                              {" "}
-                              select your filter value
-                            </option>
-                            {dataCompany.map((item) => (
-                              <option key={item.id} value={item.value}>
-                                {item.name}
-                              </option>
-                            ))}
-                          </select>
+                          <Multiselect
+                            options={optionsCompany}
+                            selectedValues={selectedCompany}
+                            onSelect={(e) => OnSelectedCompany(index, e)}
+                            onRemove={(e) => OnRemove(index, e)}
+                            displayValue="name"
+                          />
                           <div className="list-tree">
                             <CheckboxTree
                               showNodeIcon={false}

@@ -315,3 +315,26 @@ tr {
     max-height: 50vh;
     overflow-y: auto;
 }
+.chip {
+    background-color: #6f3996;
+}
+.highlightOption {
+    background: #6f3996;
+}
+.multiSelectContainer li:hover {
+    background-color: #6f3996;
+}
+.searchWrapper {
+    border-radius: 5px;
+    margin-left: 10px;
+    padding-right: 30px;
+    padding-top: 0px;
+    padding-bottom: 2px;
+    border: 2px solid #6f3996;
+}
+.button-three-dot{
+    font-size: 20px;
+    background-color: #6f3996;
+    color: white;
+    border: 1px;
+}

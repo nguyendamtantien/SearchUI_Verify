@@ -25,7 +25,7 @@ code {
   position: relative;
   width: 20%;
   margin: 0 auto;
-  height: auto;
+  height: 30vh;
   max-height: 70vh;
   margin-top: calc(120vh - 85vh - 20px);
   background: #fff;
